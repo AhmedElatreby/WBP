@@ -1,0 +1,109 @@
+/*
+    Main Color Scheme:
+    White: #FFF
+    NHS Blue: #005EB8
+    NHS Dark Grey: #425563
+    NHS Mid Gray: #768692
+    NHS Warm Yellow: #FFB81C
+    Extra Colors available: https://digital.nhs.uk/about-nhs-digital/corporate-information-and-documents/nhs-digital-style-guidelines/how-we-look/colour-palette
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
+
+/*
+    Homepage and navbar styling
+*/
+body{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+}
+
+.navbar{
+    height: 150px;
+    background: #005EB8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.decoration, .nav-items{
+    width: 80vw;
+    display:flex;
+}
+
+.nav-items{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.detail{
+    margin-left: 2vw;
+    color: #FFF;
+    margin-top: 18px;
+    font-weight: 400;
+}
+
+.decoration{
+    padding-bottom: 5px;
+    border-bottom: 1px solid #fff;
+}
+
+.nav-logo{
+    max-height:75px;
+}
+
+.nav-items{
+    margin-top:5px;
+    display:flex;
+    justify-content:center;
+}
+
+.nav-items ul{
+    color: #FFF;
+    margin:0;
+    width:80%;
+    display:flex;
+    justify-content:space-between;
+}
+
+.nav-link{
+    color: inherit;
+}
+
+.nav-link:hover, .active{
+    color: #FFB81C;
+    font-weight: 400;
+}
+
+.alert-warning{
+    background: #FFB81C;
+    color: black;
+    display:flex;
+}
+
+.alert-warning svg{
+    margin-left: 10vw;
+}
+
+@media only screen and (max-width: 491px)
+{
+    .detail{
+        display: none;
+    }
+
+    .decoration{
+        max-width: 112.5px;
+    }
+}
+
+/*
+    Login page Styling
+*/
+
+.form-group{
+    margin-top: 100px;
+}
+
+.form-group *{
+    margin-bottom: 5px;
+}

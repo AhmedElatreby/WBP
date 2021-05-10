@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Patients{% endblock %}
+
+{% block content %}
+    {% for patient in patients %}
+        <h1>{{ patient.first_name }}</h1>
+        <a href="{% url 'patient_single' id=patient.id %}">View More?</a>
+    {% endfor %}
+{% endblock %}

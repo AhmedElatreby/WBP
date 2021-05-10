@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Therapist{% endblock %}
+
+{% block content %}
+    {% for therapist in therapist %}
+        <h1>{{ therapist.firstname }}</h1>
+        <a href="{% url 'therapist_single' id=therapist.id %}">View More??</a>
+    {% endfor %}
+{% endblock %}

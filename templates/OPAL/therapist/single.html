@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ therapist.firstname }}{% endblock %}
+
+{% block content %}
+    <h1>Therapist: {{ therapist.firstname }} {{ therapy.therapist.surname }}</h1>
+        <p>{{ direct_average }}</p>
+        <p>{{ indirect_average }}</p>
+    <h5>List of Therapies:</h5>
+    {% for therapy in therapies %}
+        <h4>Therapy ID: {{ therapy.id }}</h4>
+        <p>Rehab: {{ therapy.rehab }}</p>
+        {% if therapy.direct_input %}
+            <p>Direct Assessment Type: {{ therapy.direct_input }}</p>
+            <p>Duration: {{ therapy.direct_time }}</p>
+        {% elif therapy.indirect_input %}
+            <p>Indirect Assessment Type: {{ therapy.indirect_input }}</p>
+            <p>Duration: {{ therapy.indirect_time }}</p>
+        {% else %}
+            <h5>No further information</h5>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

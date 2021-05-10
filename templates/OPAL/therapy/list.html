@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Therapies{% endblock %}
+
+{% block content %}
+    {% for therapy in therapies %}
+        <h1>{{ therapy.id }}</h1>
+        <a href="{% url 'therapy_single' id=therapy.id %}">View More?</a>
+    {% endfor %}
+{% endblock %}

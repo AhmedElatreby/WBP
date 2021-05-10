@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ therapy.id }}{% endblock %}
+
+{% block content %}
+    <h1>{{ therapy.patient.firstname }}</h1>
+    <p>{{ therapy.therapist.firstname }}</p>
+    <p>{{ therapy.rehab }}</p>
+    {% if therapy.direct_input %}
+        <p>Direct Assessment Type: {{ therapy.direct_input }}</p>
+        <p>Duration: {{ therapy.direct_time }}</p>
+    {% elif therapy.indirect_input %}
+        <p>Indirect Assessment Type: {{ therapy.indirect_input }}</p>
+        <p>Duration: {{ therapy.indirect_time }}</p>
+    {% else %}
+        <h5>No further information</h5>
+    {% endif %}
+{% endblock %}
