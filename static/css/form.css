@@ -1,0 +1,33 @@
+.control-group input, .control-group select{
+    width:100%;
+}
+.control-group{
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    border-bottom: 1px solid #CCC;
+}
+
+.form-for-nhs, .card, .card-header{
+    width: 40vw;
+}
+
+.checkbox{
+    display: flex;
+    flex-direction: row-reverse;
+    width: 80%;
+}
+
+.checkboxinput{
+    margin-top: 0.6vh;
+}
+
+@media only screen and (max-width: 850px) {
+    .form-for-nhs, .card, .card-header{
+        width: 60vw;
+  }
+    .card{
+        width: 60vw;
+  }
+}

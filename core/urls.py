@@ -8,7 +8,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name="home.html")),
     path('', include('django.contrib.auth.urls')),
-    path('OPAL/', include('OPAL.urls')),
+    path('OPAL/', include('OPAL.urls', namespace="OPAL")),
+    path('services/', include('services.urls', namespace="services")),
+    path('', include('navigation.urls', namespace="navigation")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT);

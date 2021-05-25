@@ -1,23 +1,31 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ therapist.firstname }}{% endblock %}
+{% block title %}{{ therapist }}{% endblock %}
 
 {% block content %}
-    <h1>Therapist: {{ therapist.firstname }} {{ therapy.therapist.surname }}</h1>
-        <p>{{ direct_average }}</p>
-        <p>{{ indirect_average }}</p>
-    <h5>List of Therapies:</h5>
-    {% for therapy in therapies %}
-        <h4>Therapy ID: {{ therapy.id }}</h4>
-        <p>Rehab: {{ therapy.rehab }}</p>
-        {% if therapy.direct_input %}
-            <p>Direct Assessment Type: {{ therapy.direct_input }}</p>
-            <p>Duration: {{ therapy.direct_time }}</p>
-        {% elif therapy.indirect_input %}
-            <p>Indirect Assessment Type: {{ therapy.indirect_input }}</p>
-            <p>Duration: {{ therapy.indirect_time }}</p>
-        {% else %}
-            <h5>No further information</h5>
-        {% endif %}
-    {% endfor %}
+<div class="container d-flex justify-content-center">
+    <div class="card font-weight-normal">
+        <div class="card-header nhs-blue-text">
+            {{ therapist }}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item pl-3">
+              <strong>Therapist Information:</strong><br>
+              Therapist Role: {{ therapist.therapist_role }}<br>
+              Band: {{ therapist.band }}<br>
+              Assigned Team: {{ therapist.assigned_team }}<br>
+          </li>
+          <li class="list-group-item pl-3"><strong>Direct Average Time: {% if direct_average is None %} No Data Collected {% else %} {{ direct_average }} mins. {% endif %}</strong></li>
+          <li class="list-group-item pl-3"><strong>Indirect Average Time: {% if indirect_average is None %} No Data Collected {% else %} {{ indirect_average }} mins. {% endif %}</strong></li>
+          {% if request.user.is_staff %}
+          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:therapy_list_therapist' id=therapist.id %}">List Therapist's Therapies</a>
+            <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'OPAL:therapist_edit' id=therapist.id %}">Edit This Therapists Information</a>
+            <form action= "{% url 'OPAL:therapist_delete' id=therapist.id %}" method="delete">
+                {% csrf_token %}
+                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete Therapist</button>
+            </form>
+          {% endif %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

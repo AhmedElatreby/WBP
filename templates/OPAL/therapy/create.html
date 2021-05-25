@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Therapy{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container d-flex justify-content-center">
+    <div class="form-for-nhs">
+        <div class="card-header nhs-blue-text">
+            <span class="ml-4"><strong>Create Therapy Form</strong></span>
+        </div>
+        <a style="width:100%;" class="btn btn-warning text-center p-2" href="{% url 'OPAL:direct_input_create' id=patient.id %}">Create Direct Input</a>
+        <a style="width:100%;" class="btn btn-info text-center p-2" href="{% url 'OPAL:indirect_input_create' id=patient.id %}">Create Indirect Input</a>
+        <form method="POST" class="form-group border font-weight-normal">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button style="width:100%;" type="submit" class="btn btn-primary nhs-blue-text text-center p-2">Create Therapy</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

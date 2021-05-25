@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Select Area{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center">
+  <div>
+    <div class="card m-5 font-weight-normal">
+        <div class="card-header nhs-blue-text">
+          Patients
+        </div>
+        <ul class="list-group list-group-flush">
+          <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'OPAL:patient_create' %}">Insert a Patient</a>
+          <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'OPAL:patient_list' %}">Find a Patient</a>
+        </ul>
+    </div>
+    <div class="card m-5 font-weight-normal">
+        <div class="card-header nhs-blue-text">
+          Therapists
+        </div>
+        <ul class="list-group list-group-flush">
+          <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'OPAL:therapist_create' %}">Insert a Therapist</a>
+          <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'OPAL:therapist_list' %}">Find a Therapist</a>
+        </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

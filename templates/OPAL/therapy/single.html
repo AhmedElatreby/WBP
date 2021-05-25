@@ -3,16 +3,34 @@
 {% block title %}{{ therapy.id }}{% endblock %}
 
 {% block content %}
-    <h1>{{ therapy.patient.firstname }}</h1>
-    <p>{{ therapy.therapist.firstname }}</p>
-    <p>{{ therapy.rehab }}</p>
-    {% if therapy.direct_input %}
-        <p>Direct Assessment Type: {{ therapy.direct_input }}</p>
-        <p>Duration: {{ therapy.direct_time }}</p>
-    {% elif therapy.indirect_input %}
-        <p>Indirect Assessment Type: {{ therapy.indirect_input }}</p>
-        <p>Duration: {{ therapy.indirect_time }}</p>
-    {% else %}
-        <h5>No further information</h5>
-    {% endif %}
+<div class="container d-flex justify-content-center">
+    <div class="card font-weight-normal">
+        <div class="card-header nhs-blue-text">
+            Patient: {{ therapy.patient }}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item pl-3">Therapy ID: {{ therapy.id }}</li>
+          <li class="list-group-item pl-3">Therapist: {{ therapy.therapist }}</li>
+          <li class="list-group-item pl-3">
+              <strong>Details:</strong><br>
+              Therapy contained rehab: {{ therapy.rehab }}<br>
+              Direct Assessment Type: {{ therapy.direct_input }}<br>
+              Duration: {{ therapy.direct_time }}<br>
+              Indirect Assessment Type: {{ therapy.indirect_input }}<br>
+              Duration: {{ therapy.indirect_time }}<br>
+          </li>
+
+
+          {% if request.user.is_staff %}
+          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:patient_single' id=therapy.patient.id %}">View Patient</a>
+          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:therapist_single' id=therapy.therapist.id %}">View Therapist</a>
+          <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'OPAL:therapy_edit' id=therapy.id %}">Edit Therapy</a>
+          <form action= "{% url 'OPAL:therapy_delete' id=therapy.id %}" method="delete">
+            {% csrf_token %}
+            <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete Therapy</button>
+          </form>
+          {% endif %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

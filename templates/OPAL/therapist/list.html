@@ -1,10 +1,48 @@
 {% extends 'base.html' %}
 
-{% block title %}Therapist{% endblock %}
+{% block title %}Therapists{% endblock %}
 
 {% block content %}
-    {% for therapist in therapist %}
-        <h1>{{ therapist.firstname }}</h1>
-        <a href="{% url 'therapist_single' id=therapist.id %}">View More??</a>
-    {% endfor %}
+<div class="container d-flex justify-content-center">
+    <div>
+        <div class="card-header nhs-blue-text">
+            <h3>Find a Therapist</h3>
+            <p>Search by Therapist Name, Role or ID</p>
+            <div class="input-group mb-3">
+                <form class="form-inline my-2 my-lg-0 flex" action="{% url 'OPAL:therapist_search' %}" method="get">
+                    {% csrf_token %}
+                    <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        {% for therapist in therapists %}
+        <div class="card font-weight-normal mt-3">
+            <div class="card-header nhs-blue-text">
+                {{ therapist }}
+            </div>
+            <ul class="list-group list-group-flush">
+                <a class="list-group-item btn btn-outline-primary text-left" href="{{ therapist.get_absolute_url }}">View
+                    Therapist</a>
+                {% if request.user.is_staff %}
+                <a class="list-group-item btn btn-outline-primary text-left"
+                    href="{% url 'OPAL:therapist_edit' id=therapist.id %}">Edit Therapist</a>
+                <form action="{% url 'OPAL:therapist_delete' id=therapist.id %}" method="delete">
+                    {% csrf_token %}
+                    <button style="width:100%;" type="submit"
+                        class="list-group-item btn btn-outline-danger text-left">Delete Therapist</button>
+                </form>
+                {% endif %}
+            </ul>
+        </div>
+        {% endfor %}
+        {% if messages %}
+        <div class="card font-weight-normal mt-3">
+            <div class="card-header nhs-blue-text">
+                <h1>No Results Found</h1>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

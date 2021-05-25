@@ -3,8 +3,47 @@
 {% block title %}Patients{% endblock %}
 
 {% block content %}
-    {% for patient in patients %}
-        <h1>{{ patient.first_name }}</h1>
-        <a href="{% url 'patient_single' id=patient.id %}">View More?</a>
-    {% endfor %}
+    <div class="container d-flex justify-content-center">
+        <div>
+            <div class="card-header nhs-blue-text">
+                <h3>Find a Patient</h3>
+                <p>Search by Patient Name or Hospital Number</p>
+                <div class="input-group mb-3">
+                    <form class="form-inline my-2 my-lg-0 flex" action="{% url 'OPAL:patient_search' %}" method="get">
+                        {% csrf_token %}
+                        <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+            {% if patients %}
+                {% for patient in patients %}
+                <div class="card font-weight-normal mt-3">
+                    <div class="card-header nhs-blue-text">
+                    {{ patient }}
+                </div>
+                <ul class="list-group list-group-flush">
+                <a class="list-group-item btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">View Patient</a>
+                {% if request.user.is_staff %}
+                <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'OPAL:patient_edit' id=patient.id %}">Edit Patient</a>
+                <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'services:view_services' id=patient.id %}">View Services</a>
+                <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'services:add_service' id=patient.id %}">Add Service</a>
+                <form action= "{% url 'OPAL:patient_delete' id=patient.id %}" method="delete">
+                    {% csrf_token %}
+                    <button style="width:100%;" type="submit" class="list-group-item btn btn-outline-danger text-left">Delete Patient</button>
+                </form>
+                {% endif %}
+                </ul>
+                {% endfor %}
+            {% endif %}
+            {% if messages %}
+                <div class="card font-weight-normal mt-3">
+                    <div class="card-header nhs-blue-text">
+                        <h1>No Results Found</h1>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

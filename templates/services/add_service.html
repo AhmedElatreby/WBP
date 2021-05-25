@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Patient Services{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+  <div class="card font-weight-normal">
+      <div class="card-header nhs-blue-text">
+        Add a service for Patient: {{ patient }}
+      </div>
+      <ul class="list-group list-group-flush">
+        <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+        <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'OPAL:therapy_create' id=patient.id %}">Create Therapy</a>
+        <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'services:referral_create' id=patient.id %}">Create Referral</a>
+        <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'services:pathway_create' id=patient.id %}">Create Pathway</a>
+        <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'services:D2A_create' id=patient.id %}">Create D2A</a>
+        <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'services:discharge_create' id=patient.id %}">Discharge Patient</a>
+      </ul>
+  </div>
+</div>
+{% endblock %}

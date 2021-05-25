@@ -1,21 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ patient.first_name }}{% endblock %}
+{% block title %}{{ patient }}{% endblock %}
 
 {% block content %}
-    <h1>{{ patient.first_name }}</h1>
-    {% for therapy in therapies %}
-        <h4>Therapy ID: {{ therapy.id }}</h4>
-        <p>Therapist: {{ therapy.therapist.firstname }} {{ therapy.therapist.surname }}</p>
-        <p>Rehab: {{ therapy.rehab }}</p>
-        {% if therapy.direct_input %}
-            <p>Direct Assessment Type: {{ therapy.direct_input }}</p>
-            <p>Duration: {{ therapy.direct_time }}</p>
-        {% elif therapy.indirect_input %}
-            <p>Indirect Assessment Type: {{ therapy.indirect_input }}</p>
-            <p>Duration: {{ therapy.indirect_time }}</p>
-        {% else %}
-            <h5>No further information</h5>
-        {% endif %}
-    {% endfor %}
+<div class="container  d-flex justify-content-center">
+    <div class="card font-weight-normal">
+        <div class="card-header nhs-blue-text">
+        {{ patient }}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item pl-3">
+              <strong>Personal Information:</strong><br>
+              Hospital Number: {{ patient.hospital_number }}<br>
+              Date of Birth: {{ patient.date_of_birth }}<br>
+              Postcode: {{ patient.postcode }}<br>
+              Locality: {{ patient.locality }}
+          </li>
+          <li class="list-group-item pl-3"><strong>Direct Average Time: {% if direct_average is None %} No Data Collected {% else %} {{ direct_average }} mins. {% endif %}</strong></li>
+          <li class="list-group-item pl-3"><strong>Indirect Average Time: {% if indirect_average is None %} No Data Collected {% else %} {{ indirect_average }} mins. {% endif %}</strong></li>
+          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'services:view_services' id=patient.id %}">View Patient Services</a>
+          {% if request.user.is_staff %}
+          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'services:add_service' id=patient.id %}">Add A Patient Service</a>
+          <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'OPAL:patient_edit' id=patient.id %}">Edit Patient</a>
+          <form action= "{% url 'OPAL:patient_delete' id=patient.id %}" method="delete">
+            {% csrf_token %}
+            <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete Patient</button>
+          </form>
+          {% endif %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

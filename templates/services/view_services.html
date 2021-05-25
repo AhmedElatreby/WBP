@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Patient Services{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+  <div class="card font-weight-normal">
+      <div class="card-header nhs-blue-text">
+        View Services for Patient: {{ patient }}
+      </div>
+      <ul class="list-group list-group-flush">
+        <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+        <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:therapy_list_patient' id=patient.id %}">List of Therapies</a>
+        <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'services:pathway_list' id=patient.id %}">List of Pathways</a>
+        <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'services:D2A_list' id=patient.id %}">List of D2A's</a>
+        <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'services:referral_list' id=patient.id %}">List of Referrals</a>
+        <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'services:discharge_list' id=patient.id %}">List of Discharges</a>
+      </ul>
+  </div>
+</div>
+{% endblock %}

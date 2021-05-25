@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Referral{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+    <div>
+        <div class="card-header nhs-blue-text">
+            <h3>Referral's for {{ patient }}</h3>
+        </div>
+        {% if not referrals %}
+            <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+        {% endif %}
+        {% for referral in referrals %}
+        <div class="card font-weight-normal mt-3">
+            <div class="card-header nhs-blue-text">
+                Referral ID {{ referral.id }}
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item pl-3">
+                Type of Referral: {{ referral.type_of_referral }}<br>
+                Therapist Making Referral: {{ referral.therapist }}<br>
+                Referral Date: {{ referral.referral_date }}<br>
+                Initial Contact Date: {{ referral.initial_contact_date }}<br>
+            </li>
+            <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+            {% if request.user.is_staff %}
+            <form action= "{% url 'services:referral_delete' id=referral.id %}" method="DELETE">
+                {% csrf_token %}
+                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete referral</button>
+            </form>
+            {% endif %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

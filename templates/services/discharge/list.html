@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Discharge List{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+    <div>
+        <div class="card-header nhs-blue-text">
+            <h3>Discharges for {{ patient }}</h3>
+        </div>
+        {% if not discharges %}
+            <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+        {% endif %}
+        {% for discharge in discharges %}
+        <div class="card font-weight-normal mt-3">
+            <div class="card-header nhs-blue-text">
+                Discharge ID {{ discharge.id }}
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item pl-3">
+                Date no Reside: {{ discharge.date_no_reside }}<br>
+                Discharge Date: {{ discharge.discharge_date }}<br>
+                Discharge Service: {{ discharge.discharge_service }}<br>
+                Discharge Delayed: {{ discharge.delay_discharge }}<br>
+                Delay: {{ discharge.delay_reason }}<br>
+            </li>
+            <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+            {% if request.user.is_staff %}
+            <form action= "{% url 'services:discharge_delete' id=discharge.id %}" method="DELETE">
+                {% csrf_token %}
+                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete discharge</button>
+            </form>
+            {% endif %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

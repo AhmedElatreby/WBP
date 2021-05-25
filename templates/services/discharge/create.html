@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Creating Pathway{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container d-flex justify-content-center">
+    <div class="form-for-nhs">
+        <div class="card-header nhs-blue-text">
+            <p class="ml-4"><strong>Create Discharge Form</strong></p><br>
+            <p class="ml-4">Please Create any Discharge Services Before Filling in Information for the Discharge.</p>
+        </div>
+        <a style="width:100%;" class="btn btn-warning text-center p-2" href="{% url 'services:discharge_service_create' id=patient.id %}">Create Discharge Service</a>
+        <form method="POST" class="form-group border font-weight-normal">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button style="width:100%;" type="submit" class="btn btn-primary nhs-blue-text text-center p-2">Create Discharge</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

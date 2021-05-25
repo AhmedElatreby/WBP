@@ -3,8 +3,55 @@
 {% block title %}Therapies{% endblock %}
 
 {% block content %}
-    {% for therapy in therapies %}
-        <h1>{{ therapy.id }}</h1>
-        <a href="{% url 'therapy_single' id=therapy.id %}">View More?</a>
-    {% endfor %}
+<div class="container d-flex justify-content-center">
+    <div>
+        <div class="card-header nhs-blue-text">
+            <h3>Find a Therapy</h3>
+            <p>Search by Therapist name or ID</p>
+            <div class="input-group mb-3">
+                <form class="form-inline my-2 my-lg-0 flex" action="{% url 'OPAL:therapy_search' %}" method="get">
+                    {% csrf_token %}
+                    <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        {% if therapies %}
+            {% if patient %}
+            <div class="card-header nhs-blue-text mt-4">
+                <h3>Therapies for Patient: {{ patient }}</h3>
+            </div>
+            <a class="list-group-item btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+            {% elif therapist %}
+            <div class="card-header nhs-blue-text mt-4">
+                <h3>Therapies for Therapist: {{ therapist }}</h3>
+            </div>
+            <a class="list-group-item btn btn-outline-primary text-left" href="{{ therapist.get_absolute_url }}">Return to Therapist</a>
+            {% endif %}
+            {% for therapy in therapies %}
+            <div class="card font-weight-normal mt-3">
+                <div class="card-header nhs-blue-text">
+                Therapy ID: {{ therapy.id }}
+                </div>
+                <ul class="list-group list-group-flush">
+                    <a class="list-group-item btn btn-outline-primary text-left" href="{{ therapy.get_absolute_url }}">View Therapy Detail</a>
+                    {% if request.user.is_staff %}
+                    <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'OPAL:therapy_edit' id=therapy.id %}">Edit Therapy</a>
+                    <form action= "{% url 'OPAL:therapy_delete' id=therapy.id %}" method="delete">
+                    {% csrf_token %}
+                    <button style="width:100%;" type="submit" class="list-group-item btn btn-outline-danger text-left">Delete Patient</button>
+                    </form>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="card font-weight-normal mt-2">
+            <div class="card-header nhs-blue-text">
+                <h1>No Therapies Found</h1>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
